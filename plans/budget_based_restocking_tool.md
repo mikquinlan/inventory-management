@@ -26,17 +26,17 @@ The app surfaces demand forecasts (`/demand`) but gives no way to act on them. P
 
 Add three fields to each of the 9 rows: `unit_cost` (float), `supplier` (string), `lead_time_days` (int). Keep `PSU-501` at `18.99` to match its `inventory.json` row. Suggested values (total full-restock ≈ $76K, which sets the slider range):
 
-| sku | unit_cost | lead_time_days |
-|---|---|---|
-| WDG-001 | 12.50 | 14 |
-| BRG-102 | 34.75 | 21 |
-| GSK-203 | 8.25 | 10 |
-| MTR-304 | 289.00 | 45 |
-| FLT-405 | 15.40 | 7 |
-| VLV-506 | 62.00 | 30 |
-| PSU-501 | 18.99 | 12 |
-| SNR-420 | 45.50 | 18 |
-| CTL-330 | 156.00 | 35 |
+| sku     | unit_cost | lead_time_days |
+| ------- | --------- | -------------- |
+| WDG-001 | 12.50     | 14             |
+| BRG-102 | 34.75     | 21             |
+| GSK-203 | 8.25      | 10             |
+| MTR-304 | 289.00    | 45             |
+| FLT-405 | 15.40     | 7              |
+| VLV-506 | 62.00     | 30             |
+| PSU-501 | 18.99     | 12             |
+| SNR-420 | 45.50     | 18             |
+| CTL-330 | 156.00    | 35             |
 
 Supplier names: invent plausible ones consistent in tone with `orders.json` customers (e.g. "Precision Parts Co", "Nordic Bearing Works").
 

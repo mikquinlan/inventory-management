@@ -6,16 +6,31 @@
       @click="handleToggleClick"
       :aria-label="t('search.placeholder')"
     >
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
-        <circle cx="8" cy="8" r="5.5"/>
-        <path d="M12.2 12.2L16 16" stroke-linecap="round"/>
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      >
+        <circle cx="8" cy="8" r="5.5" />
+        <path d="M12.2 12.2L16 16" stroke-linecap="round" />
       </svg>
     </button>
 
     <div class="search-field">
-      <svg class="search-field-icon" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
-        <circle cx="8" cy="8" r="5.5"/>
-        <path d="M12.2 12.2L16 16" stroke-linecap="round"/>
+      <svg
+        class="search-field-icon"
+        width="16"
+        height="16"
+        viewBox="0 0 18 18"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      >
+        <circle cx="8" cy="8" r="5.5" />
+        <path d="M12.2 12.2L16 16" stroke-linecap="round" />
       </svg>
       <input
         ref="inputRef"
@@ -49,139 +64,147 @@
           <span class="result-name">{{ item.name }}</span>
         </li>
       </ul>
-      <div v-else class="search-empty">{{ t('search.noResults') }}</div>
+      <div v-else class="search-empty">{{ t("search.noResults") }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { useRouter } from 'vue-router'
-import { useI18n } from '../composables/useI18n'
-import { api } from '../api'
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { useRouter } from "vue-router";
+import { useI18n } from "../composables/useI18n";
+import { api } from "../api";
 
-const { t } = useI18n()
-const router = useRouter()
+const { t } = useI18n();
+const router = useRouter();
 
-const rootRef = ref(null)
-const inputRef = ref(null)
+const rootRef = ref(null);
+const inputRef = ref(null);
 
-const query = ref('')
-const debouncedQuery = ref('')
-const expanded = ref(false)
-const panelOpen = ref(false)
-const highlightedIndex = ref(-1)
+const query = ref("");
+const debouncedQuery = ref("");
+const expanded = ref(false);
+const panelOpen = ref(false);
+const highlightedIndex = ref(-1);
 
-const inventoryCache = ref(null)
-const cacheLoading = ref(false)
-const cacheFetchedAt = ref(0)
-const CACHE_TTL_MS = 60000
+const inventoryCache = ref(null);
+const cacheLoading = ref(false);
+const cacheFetchedAt = ref(0);
+const CACHE_TTL_MS = 60000;
 
-let debounceTimer = null
+let debounceTimer = null;
 
 const results = computed(() => {
-  const q = debouncedQuery.value.trim().toLowerCase()
-  if (!q || !inventoryCache.value) return []
+  const q = debouncedQuery.value.trim().toLowerCase();
+  if (!q || !inventoryCache.value) return [];
   return inventoryCache.value
-    .filter(item =>
-      (item.sku && item.sku.toLowerCase().includes(q)) ||
-      (item.name && item.name.toLowerCase().includes(q))
+    .filter(
+      (item) =>
+        (item.sku && item.sku.toLowerCase().includes(q)) ||
+        (item.name && item.name.toLowerCase().includes(q)),
     )
-    .slice(0, 8)
-})
+    .slice(0, 8);
+});
 
-const showPanel = computed(() => panelOpen.value && debouncedQuery.value.trim().length > 0)
+const showPanel = computed(
+  () => panelOpen.value && debouncedQuery.value.trim().length > 0,
+);
 
 const ensureCacheLoaded = async () => {
-  const isStale = inventoryCache.value === null || (Date.now() - cacheFetchedAt.value) > CACHE_TTL_MS
-  if (!isStale || cacheLoading.value) return
-  cacheLoading.value = true
+  const isStale =
+    inventoryCache.value === null ||
+    Date.now() - cacheFetchedAt.value > CACHE_TTL_MS;
+  if (!isStale || cacheLoading.value) return;
+  cacheLoading.value = true;
   try {
-    inventoryCache.value = await api.getInventory({})
-    cacheFetchedAt.value = Date.now()
+    inventoryCache.value = await api.getInventory({});
+    cacheFetchedAt.value = Date.now();
   } catch (err) {
-    console.error('GlobalSearch: failed to load inventory', err)
-    if (inventoryCache.value === null) inventoryCache.value = []
+    console.error("GlobalSearch: failed to load inventory", err);
+    if (inventoryCache.value === null) inventoryCache.value = [];
   } finally {
-    cacheLoading.value = false
+    cacheLoading.value = false;
   }
-}
+};
 
 const closePanel = () => {
-  panelOpen.value = false
-  highlightedIndex.value = -1
-}
+  panelOpen.value = false;
+  highlightedIndex.value = -1;
+};
 
 const onFocus = () => {
-  expanded.value = true
-  ensureCacheLoaded()
+  expanded.value = true;
+  ensureCacheLoaded();
   if (query.value.trim().length > 0) {
-    panelOpen.value = true
+    panelOpen.value = true;
   }
-}
+};
 
 const onQueryInput = () => {
-  ensureCacheLoaded()
-  panelOpen.value = true
-  if (debounceTimer) clearTimeout(debounceTimer)
+  ensureCacheLoaded();
+  panelOpen.value = true;
+  if (debounceTimer) clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
-    debouncedQuery.value = query.value
-    highlightedIndex.value = -1
-  }, 250)
-}
+    debouncedQuery.value = query.value;
+    highlightedIndex.value = -1;
+  }, 250);
+};
 
 const onKeydown = (event) => {
-  if (event.key === 'Escape') {
-    closePanel()
-    inputRef.value && inputRef.value.blur()
-  } else if (event.key === 'ArrowDown') {
-    if (!showPanel.value || results.value.length === 0) return
-    event.preventDefault()
-    highlightedIndex.value = (highlightedIndex.value + 1) % results.value.length
-  } else if (event.key === 'ArrowUp') {
-    if (!showPanel.value || results.value.length === 0) return
-    event.preventDefault()
-    highlightedIndex.value = (highlightedIndex.value - 1 + results.value.length) % results.value.length
-  } else if (event.key === 'Enter') {
-    if (!showPanel.value || results.value.length === 0) return
-    const item = results.value[highlightedIndex.value] ?? results.value[0]
+  if (event.key === "Escape") {
+    closePanel();
+    inputRef.value && inputRef.value.blur();
+  } else if (event.key === "ArrowDown") {
+    if (!showPanel.value || results.value.length === 0) return;
+    event.preventDefault();
+    highlightedIndex.value =
+      (highlightedIndex.value + 1) % results.value.length;
+  } else if (event.key === "ArrowUp") {
+    if (!showPanel.value || results.value.length === 0) return;
+    event.preventDefault();
+    highlightedIndex.value =
+      (highlightedIndex.value - 1 + results.value.length) %
+      results.value.length;
+  } else if (event.key === "Enter") {
+    if (!showPanel.value || results.value.length === 0) return;
+    const item = results.value[highlightedIndex.value] ?? results.value[0];
     if (item) {
-      event.preventDefault()
-      selectResult(item)
+      event.preventDefault();
+      selectResult(item);
     }
   }
-}
+};
 
 const selectResult = (item) => {
-  closePanel()
-  query.value = ''
-  debouncedQuery.value = ''
-  expanded.value = false
-  router.push('/inventory')
-}
+  closePanel();
+  query.value = "";
+  debouncedQuery.value = "";
+  expanded.value = false;
+  router.push("/inventory");
+};
 
 const handleToggleClick = () => {
-  expanded.value = true
+  expanded.value = true;
   requestAnimationFrame(() => {
-    inputRef.value && inputRef.value.focus()
-  })
-}
+    inputRef.value && inputRef.value.focus();
+  });
+};
 
 const handleOutsideClick = (event) => {
   if (rootRef.value && !rootRef.value.contains(event.target)) {
-    closePanel()
-    expanded.value = false
+    closePanel();
+    expanded.value = false;
   }
-}
+};
 
 onMounted(() => {
-  document.addEventListener('click', handleOutsideClick)
-})
+  document.addEventListener("click", handleOutsideClick);
+});
 
 onBeforeUnmount(() => {
-  document.removeEventListener('click', handleOutsideClick)
-  if (debounceTimer) clearTimeout(debounceTimer)
-})
+  document.removeEventListener("click", handleOutsideClick);
+  if (debounceTimer) clearTimeout(debounceTimer);
+});
 </script>
 
 <style scoped>
@@ -220,7 +243,9 @@ onBeforeUnmount(() => {
   background: var(--bg-subtle);
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
 }
 
 .search-field:focus-within {
@@ -285,7 +310,7 @@ onBeforeUnmount(() => {
   flex-shrink: 0;
   color: var(--text-muted);
   font-size: 0.75rem;
-  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-family: "SFMono-Regular", Consolas, monospace;
 }
 
 .result-name {

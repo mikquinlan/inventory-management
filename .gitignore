@@ -53,3 +53,7 @@ logs/
 
 # Environment variables
 .env
+
+# Local Claude Code scratch
+.claude/hooks_bak/
+.claude/worktrees/
