@@ -6,8 +6,24 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '補充',
+    reports: 'レポート',
     companyName: '触媒コンポーネンツ',
-    subtitle: '在庫管理システム'
+    subtitle: '在庫管理システム',
+    collapse: '折りたたむ',
+    expand: '展開する',
+    menu: 'メニュー',
+    sections: {
+      operations: 'オペレーション',
+      planning: '計画',
+      insights: 'インサイト'
+    }
+  },
+
+  // Global Search
+  search: {
+    placeholder: 'SKUまたは品目名で検索...',
+    noResults: '一致する品目が見つかりません'
   },
 
   // Dashboard
@@ -112,6 +128,8 @@ export default {
     onTimeDelivery: '定時配達',
     itemsCount: '{count}件',
     quantity: '数量',
+    submittedOrders: '提出済み注文（{count}）',
+    leadTimeDays: '{count}日',
     table: {
       orderNumber: '注文番号',
       orderId: '注文ID',
@@ -125,7 +143,42 @@ export default {
       totalValue: '合計金額',
       status: 'ステータス',
       expectedDelivery: '予定配達日',
-      actualDelivery: '実際の配達日'
+      actualDelivery: '実際の配達日',
+      supplier: 'サプライヤー',
+      leadTime: 'リードタイム',
+      submittedDate: '提出日'
+    }
+  },
+
+  // Reports
+  reports: {
+    title: 'パフォーマンスレポート',
+    description: '四半期の業績指標と月次トレンドを表示',
+    loading: 'レポートを読み込み中...',
+    quarterlyPerformance: {
+      title: '四半期パフォーマンス',
+      quarter: '四半期',
+      totalOrders: '総注文数',
+      totalRevenue: '総収益',
+      avgOrderValue: '平均注文額',
+      fulfillmentRate: '履行率'
+    },
+    monthlyTrend: {
+      title: '月別収益推移'
+    },
+    momAnalysis: {
+      title: '前月比分析',
+      month: '月',
+      orders: '注文数',
+      revenue: '収益',
+      change: '変化額',
+      growthRate: '成長率'
+    },
+    summary: {
+      totalRevenueYtd: '総収益（年初来）',
+      avgMonthlyRevenue: '月平均収益',
+      totalOrdersYtd: '総注文数（年初来）',
+      bestQuarter: '最高業績四半期'
     }
   },
 
@@ -188,6 +241,31 @@ export default {
     }
   },
 
+  // Restocking
+  restocking: {
+    title: '補充',
+    description: '予算を設定し、需要予測から補充推奨を生成します',
+    budget: '予算',
+    allocated: '割当済み',
+    remaining: '残り',
+    itemsSelected: '選択品目数',
+    placeOrder: '注文する',
+    orderPlaced: '注文{orderNumber}が正常に送信されました',
+    overBudget: '注文合計が予算を超えています',
+    noRecommendations: 'この予算に対する推奨はありません',
+    table: {
+      sku: 'SKU',
+      itemName: '品目名',
+      supplier: 'サプライヤー',
+      trend: 'トレンド',
+      currentDemand: '現在の需要',
+      forecastedDemand: '予測需要',
+      unitCost: '単価',
+      quantity: '数量',
+      lineTotal: '小計'
+    }
+  },
+
   // Filters
   filters: {
     timePeriod: '期間',
@@ -195,7 +273,8 @@ export default {
     category: 'カテゴリ',
     orderStatus: '注文ステータス',
     all: 'すべて',
-    allMonths: 'すべての月'
+    allMonths: 'すべての月',
+    resetAll: 'すべてのフィルターをリセット'
   },
 
   // Statuses
@@ -206,7 +285,8 @@ export default {
     backordered: 'バックオーダー',
     inStock: '在庫あり',
     lowStock: '在庫僅少',
-    adequate: '適量'
+    adequate: '適量',
+    submitted: '提出済み'
   },
 
   // Trends
