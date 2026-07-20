@@ -58,7 +58,7 @@
           </button>
         </div>
 
-        <div v-if="recommendations.length === 0" class="no-data">
+        <div v-if="recommendations.length === 0" class="loading">
           {{ t('restocking.noRecommendations') }}
         </div>
         <div v-else class="table-container">
@@ -238,21 +238,17 @@ export default {
 </script>
 
 <style scoped>
-.budget-card {
-  margin-bottom: 1.5rem;
-}
-
 .budget-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--sp-3);
 }
 
 .budget-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -260,51 +256,44 @@ export default {
 .budget-value {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 .budget-slider {
   width: 100%;
-  accent-color: #3b82f6;
+  accent-color: var(--accent);
 }
 
 .confirmation {
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
-  color: #065f46;
-  padding: 1rem;
-  border-radius: 8px;
-  margin: 1rem 0;
-  font-size: 0.938rem;
-}
-
-.no-data {
-  text-align: center;
-  padding: 2rem;
-  color: #64748b;
+  background: color-mix(in srgb, var(--success) 12%, white);
+  border: 1px solid color-mix(in srgb, var(--success) 35%, white);
+  color: var(--success);
+  padding: var(--sp-4);
+  border-radius: var(--radius-sm);
+  margin: var(--sp-4) 0;
   font-size: 0.938rem;
 }
 
 .quantity-input {
   width: 80px;
-  padding: 0.375rem 0.5rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
+  padding: var(--sp-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 .quantity-input:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--accent);
 }
 
 .place-order-btn {
-  background: #0f172a;
-  color: white;
+  background: var(--accent);
+  color: #fff;
   border: none;
-  padding: 0.5rem 1.25rem;
-  border-radius: 6px;
+  padding: var(--sp-2) var(--sp-5);
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -312,11 +301,11 @@ export default {
 }
 
 .place-order-btn:hover:not(:disabled) {
-  background: #1e293b;
+  background: var(--accent-strong);
 }
 
 .place-order-btn:disabled {
-  background: #cbd5e1;
+  background: var(--border-strong);
   cursor: not-allowed;
 }
 </style>
