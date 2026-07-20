@@ -9,6 +9,7 @@ Factory Inventory Management System demo — Vue 3 frontend, Python FastAPI back
 ## Critical Tool Usage Rules
 
 ### Subagents
+
 - **vue-expert**: Vue 3 frontend features, UI components, styling, client-side functionality.
   **MANDATORY: any time you create or significantly modify a `.vue` file, delegate to vue-expert.**
 - **code-reviewer**: after writing significant code.
@@ -16,9 +17,11 @@ Factory Inventory Management System demo — Vue 3 frontend, Python FastAPI back
 - **general-purpose**: complex multi-step tasks that don't fit the above.
 
 ### Skills
+
 - **backend-api-test**: use when writing or modifying tests in `tests/backend`.
 
 ### MCP Tools
+
 - **ALWAYS use GitHub MCP tools** (`mcp__github__*`) for ALL GitHub operations.
   Exception: local branches — use `git checkout -b`, not `mcp__github__create_branch`.
 - **ALWAYS use Playwright MCP tools** (`mcp__playwright__*`) for browser testing, against `http://localhost:3000` (frontend) and `http://localhost:8001` (API).
@@ -55,14 +58,16 @@ uv run --project ../server pytest --cov=../server --cov-report=html
 **Request path**: `useFilters` composable → `client/src/api.js` (axios, query params) → FastAPI endpoint → in-memory list filtering → Pydantic `response_model` validation → Vue `ref` → `computed` for anything derived.
 
 **Backend** (`server/main.py`, ~300 lines, single module):
+
 - `mock_data.py` loads every `server/data/*.json` at import time into module-level lists. Data is read-only in practice; mutations don't persist and a restart reloads from disk.
 - Two shared helpers do most of the work: `filter_by_month(items, month)` (accepts both `2025-01` and `Q1-2025`) and `apply_filters(items, warehouse, category, status, month)`. New filterable endpoints should reuse them rather than re-implementing.
 - Filter convention: every filter param is `Optional[str]` and the literal string `'all'` means "no filter". Category matching is case-insensitive.
 - Pydantic models live at the top of `main.py`. **Changing a JSON data file's shape requires updating the matching model**, or the endpoint 500s on response validation.
 
 **Frontend** (`client/src/`):
+
 - Routes declared inline in `main.js`; views in `views/`, shared UI in `components/`. `App.vue` holds the global stylesheet and layout chrome — component styles are `scoped`.
-- Three composables use a **module-scope singleton** pattern: state refs are declared *outside* the exported function, so every caller shares one instance.
+- Three composables use a **module-scope singleton** pattern: state refs are declared _outside_ the exported function, so every caller shares one instance.
   - `useFilters.js` — global filter state. Note the naming mismatch: UI-side `selectedLocation` maps to the API's `warehouse` param, and `selectedPeriod` maps to `month`. `getCurrentFilters()` performs that translation; call it instead of building filter objects by hand.
   - `useI18n.js` — `en`/`ja` from `locales/*.js`, dot-path `t('a.b.c')` lookup with English fallback, locale persisted in `localStorage` under `app-locale`.
   - `useAuth.js` — mock user; several fields are locale-derived, so it depends on `useI18n`.
@@ -72,6 +77,7 @@ uv run --project ../server pytest --cov=../server --cov-report=html
 **Directory-level guidance**: `server/CLAUDE.md` and `client/CLAUDE.md` carry detailed backend and frontend conventions; read the relevant one before non-trivial work in that directory.
 
 ## Gotchas
+
 1. `v-for` keys must be stable IDs (`sku`, `id`, `month`) — never the array index.
 2. Validate dates before `.getMonth()` — mock data contains rows with missing/invalid dates.
 3. `/api/inventory` has no month filter: inventory has no time dimension. Passing `month` to it is a silent no-op.
@@ -80,6 +86,7 @@ uv run --project ../server pytest --cov=../server --cov-report=html
 6. Data files must stay cross-consistent: SKUs referenced by orders must exist in `inventory.json`, and category names must match across all files.
 
 ## Design System
+
 - Slate/gray palette (`#0f172a`, `#64748b`, `#e2e8f0`); status colors green/blue/yellow/red.
 - Charts are hand-written SVG; layout is CSS Grid. No chart library.
 - No emojis in UI.

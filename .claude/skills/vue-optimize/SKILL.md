@@ -49,12 +49,12 @@ grep -n "polyline\|<path d=\|viewBox" views/*.vue
 
 Known duplication in this repo (re-verify — files drift):
 
-| Pattern | Where | Extract to |
-|---|---|---|
-| `loading`/`error` refs + try/catch/finally fetch block | all 6 data views | `composables/useApiData.js` returning `{ data, loading, error, reload }` |
-| `watch([selectedLocation, selectedCategory, ...], loadData)` | Dashboard, Orders, Inventory, Demand, Spending | fold the watch into `useApiData` so callers pass a loader and a dep list once |
-| Modal overlay + backdrop + close button + escape key | 6 `*Modal.vue` files | `components/BaseModal.vue` with `<slot name="header">` / default slot; keeps each modal's body intact |
-| Per-component number/percent formatters | scattered | `utils/` alongside `currency.js` |
+| Pattern                                                      | Where                                          | Extract to                                                                                            |
+| ------------------------------------------------------------ | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `loading`/`error` refs + try/catch/finally fetch block       | all 6 data views                               | `composables/useApiData.js` returning `{ data, loading, error, reload }`                              |
+| `watch([selectedLocation, selectedCategory, ...], loadData)` | Dashboard, Orders, Inventory, Demand, Spending | fold the watch into `useApiData` so callers pass a loader and a dep list once                         |
+| Modal overlay + backdrop + close button + escape key         | 6 `*Modal.vue` files                           | `components/BaseModal.vue` with `<slot name="header">` / default slot; keeps each modal's body intact |
+| Per-component number/percent formatters                      | scattered                                      | `utils/` alongside `currency.js`                                                                      |
 
 Extraction is only justified when **3+ call sites** share the shape. Two sites is a coincidence; say so and move on.
 
@@ -81,6 +81,7 @@ client/src/views/Dashboard.vue:906 [structure][med] 906 lines. Split KPI grid, s
 ```
 
 Severity:
+
 - **high** — measurably wrong rendering or a repeated network call
 - **med** — real duplication (3+ sites) or a file over 400 lines
 - **low** — micro-optimizations, naming, hoisting
@@ -90,6 +91,7 @@ Close with a **recommended order**: cheap correctness fixes (keys, redundant ref
 ## Step 5 — Apply (only if asked)
 
 Per approved finding:
+
 1. Hand `vue-expert` the file, the exact line, the problem, and the intended shape.
 2. One finding per delegation. No bundling.
 3. After the edit, verify in the browser with Playwright MCP against `http://localhost:3000` (backend must be up on `:8001` — `./scripts/start.sh`). Confirm the affected view still renders the same values.

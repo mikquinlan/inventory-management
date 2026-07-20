@@ -9,13 +9,17 @@
       <div class="sidebar-brand">
         <div class="brand-mark">{{ brandInitial }}</div>
         <div class="brand-text">
-          <div class="brand-name">{{ t('nav.companyName') }}</div>
-          <div class="brand-subtitle">{{ t('nav.subtitle') }}</div>
+          <div class="brand-name">{{ t("nav.companyName") }}</div>
+          <div class="brand-subtitle">{{ t("nav.subtitle") }}</div>
         </div>
       </div>
 
       <nav class="sidebar-nav">
-        <div v-for="section in navSections" :key="section.key" class="nav-section">
+        <div
+          v-for="section in navSections"
+          :key="section.key"
+          class="nav-section"
+        >
           <div class="nav-section-label">{{ t(section.labelKey) }}</div>
           <ul>
             <li v-for="item in section.items" :key="item.path">
@@ -26,34 +30,132 @@
                 :title="sidebarCollapsed ? t(item.labelKey) : null"
               >
                 <span class="nav-icon" aria-hidden="true">
-                  <svg v-if="item.icon === 'home'" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M3.5 9.5L10 4l6.5 5.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M5.5 8.5V16a1 1 0 001 1H8.5v-4.5h3V17H13.5a1 1 0 001-1V8.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg
+                    v-if="item.icon === 'home'"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path
+                      d="M3.5 9.5L10 4l6.5 5.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M5.5 8.5V16a1 1 0 001 1H8.5v-4.5h3V17H13.5a1 1 0 001-1V8.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
                   </svg>
-                  <svg v-else-if="item.icon === 'box'" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M10 3l6 3.2v7.6L10 17l-6-3.2V6.2L10 3z" stroke-linejoin="round"/>
-                    <path d="M4 6.2L10 9.4l6-3.2M10 9.4V17" stroke-linejoin="round"/>
+                  <svg
+                    v-else-if="item.icon === 'box'"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path
+                      d="M10 3l6 3.2v7.6L10 17l-6-3.2V6.2L10 3z"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M4 6.2L10 9.4l6-3.2M10 9.4V17"
+                      stroke-linejoin="round"
+                    />
                   </svg>
-                  <svg v-else-if="item.icon === 'clipboard'" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <rect x="5" y="4" width="10" height="13" rx="1.5"/>
-                    <path d="M8 4V3a1 1 0 011-1h2a1 1 0 011 1v1" stroke-linecap="round"/>
-                    <path d="M7.5 9.5h5M7.5 12.5h5" stroke-linecap="round"/>
+                  <svg
+                    v-else-if="item.icon === 'clipboard'"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <rect x="5" y="4" width="10" height="13" rx="1.5" />
+                    <path
+                      d="M8 4V3a1 1 0 011-1h2a1 1 0 011 1v1"
+                      stroke-linecap="round"
+                    />
+                    <path d="M7.5 9.5h5M7.5 12.5h5" stroke-linecap="round" />
                   </svg>
-                  <svg v-else-if="item.icon === 'trending'" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M3.5 13.5l4.5-4.5 3 3 5.5-6" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12.5 6h4v4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg
+                    v-else-if="item.icon === 'trending'"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path
+                      d="M3.5 13.5l4.5-4.5 3 3 5.5-6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12.5 6h4v4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
                   </svg>
-                  <svg v-else-if="item.icon === 'refresh'" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M4.5 10a5.5 5.5 0 019.4-3.9M15.5 10a5.5 5.5 0 01-9.4 3.9" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M13.5 3.5v3h-3M6.5 16.5v-3h3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg
+                    v-else-if="item.icon === 'refresh'"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path
+                      d="M4.5 10a5.5 5.5 0 019.4-3.9M15.5 10a5.5 5.5 0 01-9.4 3.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M13.5 3.5v3h-3M6.5 16.5v-3h3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
                   </svg>
-                  <svg v-else-if="item.icon === 'wallet'" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <rect x="2.5" y="5.5" width="15" height="10.5" rx="1.5"/>
-                    <path d="M2.5 8.5h15" stroke-linecap="round"/>
-                    <circle cx="14" cy="12" r="1" fill="currentColor" stroke="none"/>
+                  <svg
+                    v-else-if="item.icon === 'wallet'"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <rect x="2.5" y="5.5" width="15" height="10.5" rx="1.5" />
+                    <path d="M2.5 8.5h15" stroke-linecap="round" />
+                    <circle
+                      cx="14"
+                      cy="12"
+                      r="1"
+                      fill="currentColor"
+                      stroke="none"
+                    />
                   </svg>
-                  <svg v-else-if="item.icon === 'chart'" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M4 16.5V10M9 16.5V6M14 16.5v-4M18 16.5V3" stroke-linecap="round"/>
+                  <svg
+                    v-else-if="item.icon === 'chart'"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path
+                      d="M4 16.5V10M9 16.5V6M14 16.5v-4M18 16.5V3"
+                      stroke-linecap="round"
+                    />
                   </svg>
                 </span>
                 <span class="nav-label">{{ t(item.labelKey) }}</span>
@@ -71,26 +173,56 @@
           :aria-label="t(sidebarCollapsed ? 'nav.expand' : 'nav.collapse')"
           :aria-expanded="!sidebarCollapsed"
         >
-          <svg class="toggle-icon" :class="{ rotated: sidebarCollapsed }" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M11 4l-5 5 5 5" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg
+            class="toggle-icon"
+            :class="{ rotated: sidebarCollapsed }"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path
+              d="M11 4l-5 5 5 5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
-          <span class="nav-label">{{ t('nav.collapse') }}</span>
+          <span class="nav-label">{{ t("nav.collapse") }}</span>
         </button>
       </div>
     </aside>
 
-    <div v-if="mobileSidebarOpen" class="sidebar-backdrop" @click="closeMobileSidebar"></div>
+    <div
+      v-if="mobileSidebarOpen"
+      class="sidebar-backdrop"
+      @click="closeMobileSidebar"
+    ></div>
 
     <div class="app-main">
       <header class="topbar">
         <div class="topbar-left">
-          <button ref="mobileMenuBtnRef" class="mobile-menu-btn" type="button" @click="openMobileSidebar" :aria-label="t('nav.menu')">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M3 5.5h14M3 10h14M3 14.5h14" stroke-linecap="round"/>
+          <button
+            ref="mobileMenuBtnRef"
+            class="mobile-menu-btn"
+            type="button"
+            @click="openMobileSidebar"
+            :aria-label="t('nav.menu')"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M3 5.5h14M3 10h14M3 14.5h14" stroke-linecap="round" />
             </svg>
           </button>
           <nav class="breadcrumbs" aria-label="Breadcrumb">
-            <span class="crumb muted">{{ t('nav.companyName') }}</span>
+            <span class="crumb muted">{{ t("nav.companyName") }}</span>
             <span class="crumb-sep">/</span>
             <span class="crumb current">{{ currentPageLabel }}</span>
           </nav>
@@ -133,190 +265,209 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount, computed, watch, nextTick } from 'vue'
-import { useRoute } from 'vue-router'
-import { api } from './api'
-import { useAuth } from './composables/useAuth'
-import { useI18n } from './composables/useI18n'
-import FilterBar from './components/FilterBar.vue'
-import ProfileMenu from './components/ProfileMenu.vue'
-import ProfileDetailsModal from './components/ProfileDetailsModal.vue'
-import TasksModal from './components/TasksModal.vue'
-import LanguageSwitcher from './components/LanguageSwitcher.vue'
-import GlobalSearch from './components/GlobalSearch.vue'
+import {
+  ref,
+  onMounted,
+  onBeforeUnmount,
+  computed,
+  watch,
+  nextTick,
+} from "vue";
+import { useRoute } from "vue-router";
+import { api } from "./api";
+import { useAuth } from "./composables/useAuth";
+import { useI18n } from "./composables/useI18n";
+import FilterBar from "./components/FilterBar.vue";
+import ProfileMenu from "./components/ProfileMenu.vue";
+import ProfileDetailsModal from "./components/ProfileDetailsModal.vue";
+import TasksModal from "./components/TasksModal.vue";
+import LanguageSwitcher from "./components/LanguageSwitcher.vue";
+import GlobalSearch from "./components/GlobalSearch.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     FilterBar,
     ProfileMenu,
     ProfileDetailsModal,
     TasksModal,
     LanguageSwitcher,
-    GlobalSearch
+    GlobalSearch,
   },
   setup() {
-    const { currentUser } = useAuth()
-    const { t } = useI18n()
-    const route = useRoute()
-    const showProfileDetails = ref(false)
-    const showTasks = ref(false)
-    const apiTasks = ref([])
+    const { currentUser } = useAuth();
+    const { t } = useI18n();
+    const route = useRoute();
+    const showProfileDetails = ref(false);
+    const showTasks = ref(false);
+    const apiTasks = ref([]);
 
     // Merge mock tasks from currentUser with API tasks
     const tasks = computed(() => {
-      return [...currentUser.value.tasks, ...apiTasks.value]
-    })
+      return [...currentUser.value.tasks, ...apiTasks.value];
+    });
 
     const loadTasks = async () => {
       try {
-        apiTasks.value = await api.getTasks()
+        apiTasks.value = await api.getTasks();
       } catch (err) {
-        console.error('Failed to load tasks:', err)
+        console.error("Failed to load tasks:", err);
       }
-    }
+    };
 
     const addTask = async (taskData) => {
       try {
-        const newTask = await api.createTask(taskData)
+        const newTask = await api.createTask(taskData);
         // Add new task to the beginning of the array
-        apiTasks.value.unshift(newTask)
+        apiTasks.value.unshift(newTask);
       } catch (err) {
-        console.error('Failed to add task:', err)
+        console.error("Failed to add task:", err);
       }
-    }
+    };
 
     const deleteTask = async (taskId) => {
       try {
         // Check if it's a mock task (from currentUser)
-        const isMockTask = currentUser.value.tasks.some(t => t.id === taskId)
+        const isMockTask = currentUser.value.tasks.some((t) => t.id === taskId);
 
         if (isMockTask) {
           // Remove from mock tasks
-          const index = currentUser.value.tasks.findIndex(t => t.id === taskId)
+          const index = currentUser.value.tasks.findIndex(
+            (t) => t.id === taskId,
+          );
           if (index !== -1) {
-            currentUser.value.tasks.splice(index, 1)
+            currentUser.value.tasks.splice(index, 1);
           }
         } else {
           // Remove from API tasks
-          await api.deleteTask(taskId)
-          apiTasks.value = apiTasks.value.filter(t => t.id !== taskId)
+          await api.deleteTask(taskId);
+          apiTasks.value = apiTasks.value.filter((t) => t.id !== taskId);
         }
       } catch (err) {
-        console.error('Failed to delete task:', err)
+        console.error("Failed to delete task:", err);
       }
-    }
+    };
 
     const toggleTask = async (taskId) => {
       try {
         // Check if it's a mock task (from currentUser)
-        const mockTask = currentUser.value.tasks.find(t => t.id === taskId)
+        const mockTask = currentUser.value.tasks.find((t) => t.id === taskId);
 
         if (mockTask) {
           // Toggle mock task status
-          mockTask.status = mockTask.status === 'pending' ? 'completed' : 'pending'
+          mockTask.status =
+            mockTask.status === "pending" ? "completed" : "pending";
         } else {
           // Toggle API task
-          const updatedTask = await api.toggleTask(taskId)
-          const index = apiTasks.value.findIndex(t => t.id === taskId)
+          const updatedTask = await api.toggleTask(taskId);
+          const index = apiTasks.value.findIndex((t) => t.id === taskId);
           if (index !== -1) {
-            apiTasks.value[index] = updatedTask
+            apiTasks.value[index] = updatedTask;
           }
         }
       } catch (err) {
-        console.error('Failed to toggle task:', err)
+        console.error("Failed to toggle task:", err);
       }
-    }
+    };
 
-    onMounted(loadTasks)
+    onMounted(loadTasks);
 
     // --- Sidebar navigation / layout ---
     const navSections = [
       {
-        key: 'operations',
-        labelKey: 'nav.sections.operations',
+        key: "operations",
+        labelKey: "nav.sections.operations",
         items: [
-          { path: '/', labelKey: 'nav.overview', icon: 'home' },
-          { path: '/inventory', labelKey: 'nav.inventory', icon: 'box' },
-          { path: '/orders', labelKey: 'nav.orders', icon: 'clipboard' }
-        ]
+          { path: "/", labelKey: "nav.overview", icon: "home" },
+          { path: "/inventory", labelKey: "nav.inventory", icon: "box" },
+          { path: "/orders", labelKey: "nav.orders", icon: "clipboard" },
+        ],
       },
       {
-        key: 'planning',
-        labelKey: 'nav.sections.planning',
+        key: "planning",
+        labelKey: "nav.sections.planning",
         items: [
-          { path: '/demand', labelKey: 'nav.demandForecast', icon: 'trending' },
-          { path: '/restocking', labelKey: 'nav.restocking', icon: 'refresh' }
-        ]
+          { path: "/demand", labelKey: "nav.demandForecast", icon: "trending" },
+          { path: "/restocking", labelKey: "nav.restocking", icon: "refresh" },
+        ],
       },
       {
-        key: 'insights',
-        labelKey: 'nav.sections.insights',
+        key: "insights",
+        labelKey: "nav.sections.insights",
         items: [
-          { path: '/spending', labelKey: 'nav.finance', icon: 'wallet' },
-          { path: '/reports', labelKey: 'nav.reports', icon: 'chart' }
-        ]
-      }
-    ]
+          { path: "/spending", labelKey: "nav.finance", icon: "wallet" },
+          { path: "/reports", labelKey: "nav.reports", icon: "chart" },
+        ],
+      },
+    ];
 
     const routeLabelMap = {
-      '/': 'nav.overview',
-      '/inventory': 'nav.inventory',
-      '/orders': 'nav.orders',
-      '/demand': 'nav.demandForecast',
-      '/restocking': 'nav.restocking',
-      '/spending': 'nav.finance',
-      '/reports': 'nav.reports'
-    }
+      "/": "nav.overview",
+      "/inventory": "nav.inventory",
+      "/orders": "nav.orders",
+      "/demand": "nav.demandForecast",
+      "/restocking": "nav.restocking",
+      "/spending": "nav.finance",
+      "/reports": "nav.reports",
+    };
 
-    const currentPageLabel = computed(() => t(routeLabelMap[route.path] || 'nav.overview'))
-    const brandInitial = computed(() => (t('nav.companyName') || '').charAt(0) || 'C')
+    const currentPageLabel = computed(() =>
+      t(routeLabelMap[route.path] || "nav.overview"),
+    );
+    const brandInitial = computed(
+      () => (t("nav.companyName") || "").charAt(0) || "C",
+    );
 
-    const sidebarCollapsed = ref(localStorage.getItem('sidebar-collapsed') === 'true')
+    const sidebarCollapsed = ref(
+      localStorage.getItem("sidebar-collapsed") === "true",
+    );
     const toggleSidebarCollapsed = () => {
-      sidebarCollapsed.value = !sidebarCollapsed.value
-      localStorage.setItem('sidebar-collapsed', String(sidebarCollapsed.value))
-    }
+      sidebarCollapsed.value = !sidebarCollapsed.value;
+      localStorage.setItem("sidebar-collapsed", String(sidebarCollapsed.value));
+    };
 
-    const mobileSidebarOpen = ref(false)
-    const sidebarRef = ref(null)
-    const mobileMenuBtnRef = ref(null)
+    const mobileSidebarOpen = ref(false);
+    const sidebarRef = ref(null);
+    const mobileMenuBtnRef = ref(null);
 
     const openMobileSidebar = () => {
-      mobileSidebarOpen.value = true
-    }
+      mobileSidebarOpen.value = true;
+    };
 
     const closeMobileSidebar = () => {
-      if (!mobileSidebarOpen.value) return
-      mobileSidebarOpen.value = false
-      mobileMenuBtnRef.value && mobileMenuBtnRef.value.focus()
-    }
+      if (!mobileSidebarOpen.value) return;
+      mobileSidebarOpen.value = false;
+      mobileMenuBtnRef.value && mobileMenuBtnRef.value.focus();
+    };
 
-    watch(() => route.path, () => {
-      mobileSidebarOpen.value = false
-    })
+    watch(
+      () => route.path,
+      () => {
+        mobileSidebarOpen.value = false;
+      },
+    );
 
     watch(mobileSidebarOpen, (isOpen) => {
       if (isOpen) {
         nextTick(() => {
-          sidebarRef.value && sidebarRef.value.focus()
-        })
+          sidebarRef.value && sidebarRef.value.focus();
+        });
       }
-    })
+    });
 
     const onGlobalKeydown = (event) => {
-      if (event.key === 'Escape' && mobileSidebarOpen.value) {
-        closeMobileSidebar()
+      if (event.key === "Escape" && mobileSidebarOpen.value) {
+        closeMobileSidebar();
       }
-    }
+    };
 
     onMounted(() => {
-      document.addEventListener('keydown', onGlobalKeydown)
-    })
+      document.addEventListener("keydown", onGlobalKeydown);
+    });
 
     onBeforeUnmount(() => {
-      document.removeEventListener('keydown', onGlobalKeydown)
-    })
+      document.removeEventListener("keydown", onGlobalKeydown);
+    });
 
     return {
       t,
@@ -335,17 +486,17 @@ export default {
       sidebarRef,
       mobileMenuBtnRef,
       openMobileSidebar,
-      closeMobileSidebar
-    }
-  }
-}
+      closeMobileSidebar,
+    };
+  },
+};
 </script>
 
 <style>
 :root {
-  --sp-1: .25rem;
-  --sp-2: .5rem;
-  --sp-3: .75rem;
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
   --sp-4: 1rem;
   --sp-5: 1.5rem;
   --sp-6: 2rem;
@@ -382,8 +533,8 @@ export default {
   --radius: 10px;
   --radius-lg: 14px;
 
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, .04);
-  --shadow: 0 4px 12px rgba(15, 23, 42, .06);
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
 
   --sidebar-w: 248px;
   --sidebar-w-collapsed: 68px;
@@ -397,7 +548,16 @@ export default {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
   background: var(--bg-app);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -518,7 +678,9 @@ body {
   text-decoration: none;
   font-weight: 500;
   font-size: 0.875rem;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .sidebar.collapsed .sidebar-nav a {
@@ -537,7 +699,7 @@ body {
 }
 
 .sidebar-nav a.active::before {
-  content: '';
+  content: "";
   position: absolute;
   left: calc(var(--sp-3) * -1);
   top: 0;
@@ -588,7 +750,9 @@ body {
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .sidebar.collapsed .sidebar-toggle {

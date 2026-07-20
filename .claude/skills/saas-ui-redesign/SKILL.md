@@ -34,27 +34,43 @@ Add a `:root` block at the top of App.vue's global `<style>`, then express new C
 ```css
 :root {
   /* spacing — 4px scale, use these instead of ad-hoc rem values */
-  --sp-1: 0.25rem; --sp-2: 0.5rem;  --sp-3: 0.75rem; --sp-4: 1rem;
-  --sp-5: 1.5rem;  --sp-6: 2rem;    --sp-8: 3rem;
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-8: 3rem;
 
   /* surfaces */
-  --bg-app: #f8fafc; --bg-surface: #ffffff; --bg-subtle: #f1f5f9;
-  --border: #e2e8f0; --border-strong: #cbd5e1;
+  --bg-app: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f1f5f9;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
 
   /* text */
-  --text-primary: #0f172a; --text-secondary: #475569; --text-muted: #64748b;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
 
   /* accent + status */
-  --accent: #2563eb; --accent-subtle: #eff6ff;
-  --success: #059669; --warning: #ea580c; --danger: #dc2626;
+  --accent: #2563eb;
+  --accent-subtle: #eff6ff;
+  --success: #059669;
+  --warning: #ea580c;
+  --danger: #dc2626;
 
   /* shape */
-  --radius-sm: 6px; --radius: 10px; --radius-lg: 14px;
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
 
   /* sidebar */
-  --sidebar-w: 248px; --sidebar-w-collapsed: 68px;
+  --sidebar-w: 248px;
+  --sidebar-w-collapsed: 68px;
 }
 ```
 
@@ -76,6 +92,7 @@ Replace the `.top-nav` header with a two-column grid in `App.vue`:
 ```
 
 Sidebar contents top→bottom:
+
 1. **Brand** — `t('nav.companyName')` + `t('nav.subtitle')`, padding `--sp-5 --sp-4`, bottom border.
 2. **Nav list** — `<nav><ul>` of `router-link`s. Each item: 20px inline SVG icon + label, `padding: var(--sp-2) var(--sp-3)`, `gap: var(--sp-3)`, `border-radius: var(--radius-sm)`, `--text-muted`.
    - hover: `background: var(--bg-subtle); color: var(--text-primary)`
@@ -115,6 +132,7 @@ Close the mobile drawer on route change (`watch(() => route.path, ...)`) or it s
 Servers must be up (`./scripts/start.sh`; frontend :3000, backend :8001 — no Vite proxy, so an unreachable backend means empty views, not a layout bug).
 
 Use **Playwright MCP** (`mcp__playwright__*`, project rule):
+
 1. Visit every route from `main.js`. Screenshot each at 1440px.
 2. Re-check at 1024px and 390px widths.
 3. `browser_console_messages` — must be free of Vue warnings; a missing-key or undefined-component warning here is usually a half-finished nav edit.

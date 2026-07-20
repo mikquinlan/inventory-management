@@ -1,14 +1,18 @@
 <template>
   <div class="restocking">
     <div class="page-header">
-      <h2>{{ t('restocking.title') }}</h2>
-      <p>{{ t('restocking.description') }}</p>
+      <h2>{{ t("restocking.title") }}</h2>
+      <p>{{ t("restocking.description") }}</p>
     </div>
 
     <div class="card budget-card">
       <div class="budget-row">
-        <label class="budget-label" for="budget-slider">{{ t('restocking.budget') }}</label>
-        <span class="budget-value">{{ formatCurrency(budget, currentCurrency) }}</span>
+        <label class="budget-label" for="budget-slider">{{
+          t("restocking.budget")
+        }}</label>
+        <span class="budget-value">{{
+          formatCurrency(budget, currentCurrency)
+        }}</span>
       </div>
       <input
         id="budget-slider"
@@ -21,7 +25,7 @@
       />
     </div>
 
-    <div v-if="loading" class="loading">{{ t('common.loading') }}</div>
+    <div v-if="loading" class="loading">{{ t("common.loading") }}</div>
     <div v-else-if="error" class="error">{{ error }}</div>
     <div v-else>
       <div v-if="confirmation" class="confirmation">{{ confirmation }}</div>
@@ -29,56 +33,64 @@
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-label">{{ t('restocking.budget') }}</div>
-          <div class="stat-value">{{ formatCurrency(budget, currentCurrency) }}</div>
+          <div class="stat-label">{{ t("restocking.budget") }}</div>
+          <div class="stat-value">
+            {{ formatCurrency(budget, currentCurrency) }}
+          </div>
         </div>
         <div class="stat-card info">
-          <div class="stat-label">{{ t('restocking.allocated') }}</div>
-          <div class="stat-value">{{ formatCurrency(allocated, currentCurrency) }}</div>
+          <div class="stat-label">{{ t("restocking.allocated") }}</div>
+          <div class="stat-value">
+            {{ formatCurrency(allocated, currentCurrency) }}
+          </div>
         </div>
         <div class="stat-card" :class="{ danger: remaining < 0 }">
-          <div class="stat-label">{{ t('restocking.remaining') }}</div>
-          <div class="stat-value">{{ formatCurrency(remaining, currentCurrency) }}</div>
+          <div class="stat-label">{{ t("restocking.remaining") }}</div>
+          <div class="stat-value">
+            {{ formatCurrency(remaining, currentCurrency) }}
+          </div>
         </div>
         <div class="stat-card success">
-          <div class="stat-label">{{ t('restocking.itemsSelected') }}</div>
+          <div class="stat-label">{{ t("restocking.itemsSelected") }}</div>
           <div class="stat-value">{{ itemsSelected }}</div>
         </div>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">{{ t('restocking.title') }}</h3>
+          <h3 class="card-title">{{ t("restocking.title") }}</h3>
           <button
             class="place-order-btn"
             :disabled="!canPlaceOrder || placing"
             @click="placeOrder"
           >
-            {{ t('restocking.placeOrder') }}
+            {{ t("restocking.placeOrder") }}
           </button>
         </div>
 
         <div v-if="recommendations.length === 0" class="loading">
-          {{ t('restocking.noRecommendations') }}
+          {{ t("restocking.noRecommendations") }}
         </div>
         <div v-else class="table-container">
           <table>
             <thead>
               <tr>
-                <th>{{ t('restocking.table.sku') }}</th>
-                <th>{{ t('restocking.table.itemName') }}</th>
-                <th>{{ t('restocking.table.supplier') }}</th>
-                <th>{{ t('restocking.table.trend') }}</th>
-                <th>{{ t('restocking.table.currentDemand') }}</th>
-                <th>{{ t('restocking.table.forecastedDemand') }}</th>
-                <th>{{ t('restocking.table.unitCost') }}</th>
-                <th>{{ t('restocking.table.quantity') }}</th>
-                <th>{{ t('restocking.table.lineTotal') }}</th>
+                <th>{{ t("restocking.table.sku") }}</th>
+                <th>{{ t("restocking.table.itemName") }}</th>
+                <th>{{ t("restocking.table.supplier") }}</th>
+                <th>{{ t("restocking.table.trend") }}</th>
+                <th>{{ t("restocking.table.currentDemand") }}</th>
+                <th>{{ t("restocking.table.forecastedDemand") }}</th>
+                <th>{{ t("restocking.table.unitCost") }}</th>
+                <th>{{ t("restocking.table.quantity") }}</th>
+                <th>{{ t("restocking.table.lineTotal") }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="row in recommendations" :key="row.item_sku">
-                <td><strong>{{ row.item_sku }}</strong></td>
+                <td>
+                  <strong>{{ row.item_sku }}</strong>
+                </td>
                 <td>{{ row.item_name }}</td>
                 <td>{{ row.supplier }}</td>
                 <td>
@@ -97,7 +109,11 @@
                     v-model.number="quantities[row.item_sku]"
                   />
                 </td>
-                <td><strong>{{ formatCurrency(lineTotal(row), currentCurrency) }}</strong></td>
+                <td>
+                  <strong>{{
+                    formatCurrency(lineTotal(row), currentCurrency)
+                  }}</strong>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -108,111 +124,121 @@
 </template>
 
 <script>
-import { ref, reactive, computed, watch, onMounted } from 'vue'
-import { api } from '../api'
-import { useI18n } from '../composables/useI18n'
-import { formatCurrency } from '../utils/currency'
+import { ref, reactive, computed, watch, onMounted } from "vue";
+import { api } from "../api";
+import { useI18n } from "../composables/useI18n";
+import { formatCurrency } from "../utils/currency";
 
 export default {
-  name: 'Restocking',
+  name: "Restocking",
   setup() {
-    const { t, currentCurrency } = useI18n()
+    const { t, currentCurrency } = useI18n();
 
-    const budget = ref(50000)
-    const loading = ref(true)
-    const error = ref(null)
-    const recommendations = ref([])
-    const quantities = reactive({})
+    const budget = ref(50000);
+    const loading = ref(true);
+    const error = ref(null);
+    const recommendations = ref([]);
+    const quantities = reactive({});
 
-    const placing = ref(false)
-    const confirmation = ref(null)
-    const submitError = ref(null)
+    const placing = ref(false);
+    const confirmation = ref(null);
+    const submitError = ref(null);
 
-    let debounceTimer = null
+    let debounceTimer = null;
 
     const resetQuantities = () => {
       for (const key of Object.keys(quantities)) {
-        delete quantities[key]
+        delete quantities[key];
       }
       for (const row of recommendations.value) {
-        quantities[row.item_sku] = row.recommended_quantity
+        quantities[row.item_sku] = row.recommended_quantity;
       }
-    }
+    };
 
     const loadRecommendations = async () => {
       try {
-        loading.value = true
-        error.value = null
-        recommendations.value = await api.getRestockRecommendations(budget.value)
-        resetQuantities()
+        loading.value = true;
+        error.value = null;
+        recommendations.value = await api.getRestockRecommendations(
+          budget.value,
+        );
+        resetQuantities();
       } catch (err) {
-        error.value = 'Failed to load restock recommendations: ' + err.message
+        error.value = "Failed to load restock recommendations: " + err.message;
       } finally {
-        loading.value = false
+        loading.value = false;
       }
-    }
+    };
 
     watch(budget, () => {
-      confirmation.value = null
-      submitError.value = null
-      if (debounceTimer) clearTimeout(debounceTimer)
+      confirmation.value = null;
+      submitError.value = null;
+      if (debounceTimer) clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
-        loadRecommendations()
-      }, 300)
-    })
+        loadRecommendations();
+      }, 300);
+    });
 
     const lineTotal = (row) => {
-      const qty = quantities[row.item_sku] || 0
-      return qty * row.unit_cost
-    }
+      const qty = quantities[row.item_sku] || 0;
+      return qty * row.unit_cost;
+    };
 
     const allocated = computed(() => {
-      return recommendations.value.reduce((sum, row) => sum + lineTotal(row), 0)
-    })
+      return recommendations.value.reduce(
+        (sum, row) => sum + lineTotal(row),
+        0,
+      );
+    });
 
-    const remaining = computed(() => budget.value - allocated.value)
+    const remaining = computed(() => budget.value - allocated.value);
 
     const itemsSelected = computed(() => {
-      return recommendations.value.filter(row => (quantities[row.item_sku] || 0) > 0).length
-    })
+      return recommendations.value.filter(
+        (row) => (quantities[row.item_sku] || 0) > 0,
+      ).length;
+    });
 
     const canPlaceOrder = computed(() => {
-      return itemsSelected.value > 0 && allocated.value <= budget.value
-    })
+      return itemsSelected.value > 0 && allocated.value <= budget.value;
+    });
 
     const placeOrder = async () => {
-      confirmation.value = null
-      submitError.value = null
-      placing.value = true
+      confirmation.value = null;
+      submitError.value = null;
+      placing.value = true;
       try {
         const items = recommendations.value
-          .filter(row => (quantities[row.item_sku] || 0) > 0)
-          .map(row => ({
+          .filter((row) => (quantities[row.item_sku] || 0) > 0)
+          .map((row) => ({
             item_sku: row.item_sku,
             item_name: row.item_name,
             quantity: quantities[row.item_sku],
             unit_cost: row.unit_cost,
             supplier: row.supplier,
-            lead_time_days: row.lead_time_days
-          }))
+            lead_time_days: row.lead_time_days,
+          }));
 
         const result = await api.createRestockOrder({
           budget: budget.value,
-          items
-        })
+          items,
+        });
 
-        confirmation.value = t('restocking.orderPlaced', { orderNumber: result.order_number })
-        resetQuantities()
+        confirmation.value = t("restocking.orderPlaced", {
+          orderNumber: result.order_number,
+        });
+        resetQuantities();
       } catch (err) {
-        submitError.value = err.response && err.response.status === 400
-          ? t('restocking.overBudget')
-          : ('Failed to place order: ' + err.message)
+        submitError.value =
+          err.response && err.response.status === 400
+            ? t("restocking.overBudget")
+            : "Failed to place order: " + err.message;
       } finally {
-        placing.value = false
+        placing.value = false;
       }
-    }
+    };
 
-    onMounted(loadRecommendations)
+    onMounted(loadRecommendations);
 
     return {
       t,
@@ -231,10 +257,10 @@ export default {
       placing,
       confirmation,
       submitError,
-      placeOrder
-    }
-  }
-}
+      placeOrder,
+    };
+  },
+};
 </script>
 
 <style scoped>
